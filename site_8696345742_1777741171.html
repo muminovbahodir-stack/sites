@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>современный, красивый и полностью рабочий сайт продаж в одном файле index.html (HTML + CSS + JS).
+
+Требования:
+
+1. Дизайн:
+- Тёмная тема, премиальный стиль (как Apple / Stripe / Telegram)
+- Адаптивный (мобильный + десктоп)
+- Плавные анимации, hover-эффекты
+- Карточки товаров с тенями и скруглениями
+- Крупные кнопки (удобно для телефона)
+
+2. Товары:
+- Минимум 6 товаров (название, цена, картинка/иконка)
+- Кнопка "Добавить в корзину"
+- Счётчик количества
+- Возможность удалить товар
+
+3. Корзина:
+- Модальное окно или выезжающая панель
+- Список товаров
+- Общая сумма
+- Кнопки:
+  - Оплатить
+  - Очистить корзину
+
+4. Оплата:
+- Интеграция с Telegram WebApp
+- Использовать Telegram.WebApp.openInvoice()
+- Передавать:
+  - список товаров
+  - итоговую сумму
+- Имитация успешной оплаты (если нет backend)
+
+5. Логика:
+- Всё работает без перезагрузки
+- Сохранение корзины (localStorage)
+- Чистый, читаемый код
+
+6. UX:
+- После оплаты:
+  - показать "Payment successful"
+  - очистить корзину
+- Уведомления при добавлении товара
+
+7. Ограничения:
+- НЕ использовать внешние библиотеки
+- Всё в одном файле
+- Код должен быть полностью готов к использованию
+
+8. Дополнительно:
+- Добавь логотип/название магазина
+- Добавь блок "О нас"
+- Добавь кнопку "Поддержка" (донат)</title>
+<style>
+body {
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:white;
+}
+header {
+  padding:40px 20px;
+  text-align:center;
+  background:linear-gradient(135deg,#111827,#1e293b);
+}
+h1 {
+  font-size:42px;
+}
+p {
+  color:#cbd5e1;
+}
+.products {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:30px;
+}
+.card {
+  background:#1e293b;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+.icon {
+  font-size:60px;
+}
+button {
+  border:0;
+  border-radius:14px;
+  padding:14px 20px;
+  background:#22c55e;
+  color:white;
+  font-weight:900;
+  font-size:16px;
+}
+.cart {
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#22c55e;
+  padding:18px;
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>современный, красивый и полностью рабочий сайт продаж в одном файле index.html (HTML + CSS + JS).
+
+Требования:
+
+1. Дизайн:
+- Тёмная тема, премиальный стиль (как Apple / Stripe / Telegram)
+- Адаптивный (мобильный + десктоп)
+- Плавные анимации, hover-эффекты
+- Карточки товаров с тенями и скруглениями
+- Крупные кнопки (удобно для телефона)
+
+2. Товары:
+- Минимум 6 товаров (название, цена, картинка/иконка)
+- Кнопка "Добавить в корзину"
+- Счётчик количества
+- Возможность удалить товар
+
+3. Корзина:
+- Модальное окно или выезжающая панель
+- Список товаров
+- Общая сумма
+- Кнопки:
+  - Оплатить
+  - Очистить корзину
+
+4. Оплата:
+- Интеграция с Telegram WebApp
+- Использовать Telegram.WebApp.openInvoice()
+- Передавать:
+  - список товаров
+  - итоговую сумму
+- Имитация успешной оплаты (если нет backend)
+
+5. Логика:
+- Всё работает без перезагрузки
+- Сохранение корзины (localStorage)
+- Чистый, читаемый код
+
+6. UX:
+- После оплаты:
+  - показать "Payment successful"
+  - очистить корзину
+- Уведомления при добавлении товара
+
+7. Ограничения:
+- НЕ использовать внешние библиотеки
+- Всё в одном файле
+- Код должен быть полностью готов к использованию
+
+8. Дополнительно:
+- Добавь логотип/название магазина
+- Добавь блок "О нас"
+- Добавь кнопку "Поддержка" (донат)</h1>
+  <p>Современный сайт продаж, созданный ботом</p>
+</header>
+
+<section class="products">
+  <div class="card">
+    <div class="icon">🍔</div>
+    <h2>Burger</h2>
+    <p>$4.99</p>
+    <button onclick="add(4.99)">Добавить</button>
+  </div>
+
+  <div class="card">
+    <div class="icon">🍟</div>
+    <h2>Fries</h2>
+    <p>$1.49</p>
+    <button onclick="add(1.49)">Добавить</button>
+  </div>
+
+  <div class="card">
+    <div class="icon">🍕</div>
+    <h2>Pizza</h2>
+    <p>$7.99</p>
+    <button onclick="add(7.99)">Добавить</button>
+  </div>
+
+  <div class="card">
+    <div class="icon">🥤</div>
+    <h2>Coke</h2>
+    <p>$1.49</p>
+    <button onclick="add(1.49)">Добавить</button>
+  </div>
+</section>
+
+<div class="cart" id="cart">Total: $0.00</div>
+
+<script>
+let total = 0;
+
+function add(price) {
+  total += price;
+  document.getElementById("cart").innerText = "Total: $" + total.toFixed(2);
+}
+</script>
+
+</body>
+</html>
