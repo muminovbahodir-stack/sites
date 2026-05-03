@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Магазин «PremiumShop»</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    :root {
+        --bg-dark: #0f0f1a;
+        --bg-card: #1e1e2f;
+        --text-primary: #e0e0ff;
+        --accent: #00ff9f;
+        --shadow: rgba(0,0,0,0.4);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+        font-family:system-ui,Arial,sans-serif;
+        background:var(--bg-dark);
+        color:var(--text-primary);
+        line-height:1.6;
+    }
+    a{color:var(--accent);text-decoration:none;}
+    header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:1rem 2rem;
+        position:sticky;top:0;z-index:10;
+        background:rgba(0,0,0,0.6);
+    }
+    .logo{
+        font-size:1.5rem;
+        font-weight:bold;
+        color:var(--accent);
+    }
+    main{
+        padding:2rem;
+        max-width:1200px;
+        margin:auto;
+    }
+    .products{
+        display:grid;
+        grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+        gap:1.5rem;
+    }
+    .card{
+        background:var(--bg-card);
+        border-radius:12px;
+        overflow:hidden;
+        box-shadow:0 4px 12px var(--shadow);
+        transition:transform .2s,box-shadow .2s;
+    }
+    .card:hover{
+        transform:translateY(-4px);
+        box-shadow:0 8px 20px var(--shadow);
+    }
+    .card img{
+        width:100%;
+        height:180px;
+        object-fit:cover;
+        background:#000;
+    }
+    .card-body{
+        padding:1rem;
+    }
+    .card-title{
+        font-size:1.1rem;
+        margin-bottom:.5rem;
+        color:var(--accent);
+    }
+    .card-text{
+        font-size:.9rem;
+        margin-bottom:.8rem;
+        color:#c0c0d0;
+    }
+    .price{
+        font-size:1.2rem;
+        font-weight:bold;
+        color:var(--accent);
+        margin-bottom:.8rem;
+    }
+    .btn{
+        display:inline-block;
+        padding:.8rem 1.5rem;
+        border:none;
+        border-radius:8px;
+        font-size:1rem;
+        cursor:pointer;
+        transition:background .2s;
+    }
+    .btn-add{
+        background:var(--accent);
+        color:#000;
+        margin-top:.5rem;
+    }
+    .btn-add:hover{
+        background:#00e080;
+    }
+    .btn-cart{
+        background:#00ff9f;
+        color:#000;
+        margin-top:.5rem;
+    }
+    .btn-cart:hover{
+        background:#00e68a;
+    }
+    .support{
+        margin-top:2rem;
+        text-align:center;
+    }
+    .about{
+        background:#111;
+        padding:2rem;
+        border-radius:12px;
+        margin-top:3rem;
+    }
+    /* Cart panel */
+    #cart{
+        position:fixed;
+        top:0;right:-100%;
+        width:80%;
+        height:100%;
+        background:var(--bg-dark);
+        flex-direction:column;
+        display:flex;
+        overflow-y:auto;
+        transition:right .3s ease;
+        z-index:100;
+        padding:1rem;
+    }
+    #cart.open{
+        right:0;
+    }
+    #cart-close{
+        align-self:flex-end;
+        background:none;
+        border:none;
+        color:var(--accent);
+        font-size:1.5rem;
+        cursor:pointer;
+    }
+    #cart-total{
+        font-size:1.2rem;
+        font-weight:bold;
+        margin:1rem 0;
+    }
+    #cart-list{
+        flex:1;
+    }
+    .cart-item{
+        display:flex;
+        justify-content:space-between;
+        padding:.5rem 0;
+        border-bottom:1px solid #2a2a3a;
+    }
+    .cart-item img{
+        width:60px;
+        height:60px;
+        object-fit:cover
