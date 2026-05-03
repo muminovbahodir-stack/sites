@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Премиум-магазин</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #f5f5f5;
+            --accent-gold: #ffd700;
+            --shadow: rgba(0,0,0,0.4);
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{
+            font-family:system-ui,Arial,sans-serif;
+            background:var(--bg-dark);
+            color:var(--text-light);
+            line-height:1.5;
+        }
+        a{text-decoration:none;color:inherit;}
+        /* Header */
+        header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:1rem 2rem;
+            position:sticky;top:0;background:var(--bg-dark);
+            z-index:10;
+        }
+        .logo{
+            font-size:1.5rem;
+            font-weight:bold;
+            color:var(--accent-gold);
+        }
+        .nav{
+            display:flex;gap:1.5rem;
+        }
+        .nav a{
+            color:var(--text-light);
+            font-weight:500;
+            transition:color .2s;
+        }
+        .nav a:hover{color:var(--accent-gold);}
+        .support-btn{
+            background:var(--accent-gold);
+            color:#121212;
+            border:none;
+            padding:.6rem 1.2rem;
+            font-size:1rem;
+            border-radius:4px;
+            cursor:pointer;
+            transition:background .2s;
+        }
+        .support-btn:hover{background:#e6b800;}
+        /* Hero */
+        .hero{
+            text-align:center;
+            padding:4rem 2rem;
+        }
+        .hero h1{
+            font-size:2.8rem;
+            margin-bottom:.5rem;
+        }
+        .hero p{
+            font-size:1.2rem;
+            max-width:600px;
+            margin:auto;
+            opacity:.8;
+        }
+        /* About */
+        .about{
+            padding:2rem;
+            max-width:900px;
+            margin:auto;
+            text-align:center;
+        }
+        .about h2{
+            margin-bottom:.5rem;
+            color:var(--accent-gold);
+        }
+        .about p{
+            max-width:600px;
+            margin:auto;
+        }
+        /* Products */
+        .products{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+            gap:1.5rem;
+            padding:2rem;
+        }
+        .card{
+            background:var(--bg-card);
+            border-radius:8px;
+            overflow:hidden;
+            box-shadow:0 4px 12px var(--shadow);
+            display:flex;
+            flex-direction:column;
+            transition:transform .2s,box-shadow .2s;
+        }
+        .card:hover{
+            transform:translateY(-4px);
+            box-shadow:0 8px 20px var(--shadow);
+        }
+        .card img{
+            width:100%;
+            height:160px;
+            object-fit:cover;
+        }
+        .card-body{
+            flex:1;
+            padding:1rem;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+        }
+        .card-title{
+            font-size:1.1rem;
+            margin-bottom:.5rem;
+        }
+        .card-price{
+            font-size:1.4rem;
+            color:var(--accent-gold);
+            margin-bottom:.8rem;
+        }
+        .card-counter{
+            display:flex;
+            align-items:center;
+            gap:.4rem;
+            margin:0.5rem 0;
+        }
+        .card-counter button{
+            background:var(--bg-card);
+            border:1px solid var(--text-light);
+            color:var(--text-light);
+            width:2rem;height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            font-size:1rem;
+        }
+        .card-counter span{
+            min-width:2rem;
+            text-align:center;
+        }
+        .card-actions{
+            display:flex;
+            justify-content:space-between;
+            padding:0.5rem 1rem;
+            background:var(--bg-card);
+        }
+        .card button{
+            flex:1;
+            min-width:0;
+            padding:.8rem;
+            border:none;
+            border-radius:6px;
+            font-size:1rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:background .2s;
+        }
+        .add-btn{
+            background:var(--accent-gold);
+            color:#121212;
+        }
+        .add-btn:hover{background:#e6b800;}
+        .del-btn{
+            background:#e53935;
+            color:#fff;
+        }
+        .del-btn:hover{background:#c62828;}
+        /* Toast */
+        .toast{
+            position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+            background:#323232;color:#fff;padding:.8rem 1.5rem;
+            border-radius:6px;opacity:0;pointer-events:none;
+            transition:opacity .3s;
+        }
+        .toast.show{opacity:1;pointer-events:auto;}
+        /* Cart modal */
+        .cart-overlay{
+            position:fixed;top:0;left:0;width:100%;height:100%;
+            background:rgba(0,0,0,.7);display:none;align-items:flex-end;
+            z-index:20;
+        }
+        .cart-panel{
+            background:var(--bg-card);
+            width:90%;max-width:500px;
+            border-radius:8px;
+            max-height:80vh;
+            overflow-y:auto;
+            padding:1.5rem;
+            box-shadow:0 4px 12px var(--shadow);
+        }
+        .cart-header{
+            display:flex;justify-content:space-between;align-items:center;
+            margin-bottom:1rem;
+        }
+        .cart-header h3{margin:0;}
+        .cart-close{
+            background:none;border:none;color:var(--text-light);
+            font-size:1.5rem;cursor:pointer;
+        }
+        .cart-item{
+            display:flex;align-items:center;gap:.8rem;
+            padding:.8rem 0;border-bottom:1px solid #333;
+        }
+        .cart-item img{
+            width:60px;height:60px;object-fit:cover;
+            border-radius:4px;
+        }
+        .cart-item-details{
+            flex:1;
+        }
+        .cart-item-details h4{
+            margin:0 0 .3rem;font-size:1rem;
+        }
+        .cart-item-details .price{
+            font-size:.9rem;color:var(--accent-gold);
+        }
+        .cart-count{
+            display:flex;align-items:center;gap:.3rem;
+            margin-top:.3rem;
+        }
+        .cart-count button{
+            background:var(--bg-card);border:1px solid var(--text-light);
+            color:var(--text-light);width:2rem;height:2rem;
+            border-radius:50%;cursor:pointer;font-size:1rem;
+        }
+        .cart-subtotal{
+            margin-top:1rem;padding-top:1rem;
+            border-top:1px solid #333;
+            font-size:1.2rem;text-align:right;
+        }
+        .cart-actions-panel{
+            display:flex;justify-content:space-between;
+            margin-top:1rem;
+        }
+        .cart-actions-panel button{
+            flex:1;min-width:0;padding:.8rem;border:none;
+            border-radius:6px;font-size:1rem;cursor:pointer;
+            transition:background .2s;
+        }
+        .pay-btn{
+            background:var(--accent-gold);color:#121212;
+        }
+        .pay-btn:hover{background:#e6b800;}
+        .clear-btn{
+            background:#e53935;color:#fff;
+        }
+        .clear-btn:hover{background:#c62828;}
+        /* Responsive */
+        @media (max-width:600px){
+            .hero h1{font-size:2.2rem;}
+            .hero p{font-size:1rem;}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Shop Premium</div>
+    <div class="nav">
+        <a href="#">Главная</a>
+        <a href="#about">О нас</a>
+        <a href="#support">Поддержка</a>
+    </div>
+    <button class="support-btn" id="supportBtn">Поддержать магазин</button>
+    <button class="add-btn" id="cartToggle" style="display:none;">🛒</button>
+</header>
+
+<section class="hero">
+    <h1>Премиум‑товары</h1>
+    <p>Высокое качество, стильный дизайн и удобство покупок.</p>
+</section>
+
+<section class="about" id="about">
+    <h2>О нас</h2>
+    <p>Мы – команда профессионалов, создающих современные решения для вашего бизнеса. Наша цель – предоставить только лучшие товары по доступным ценам.</p>
+</section>
+
+<section class="products" id="products">
+    <!-- Пример 6 карточек -->
+    <div class="card">
+        <img src="https://via.placeholder.com/300x160?text=Product+1" alt="Product 1">
+        <div class="card-body">
+            <h4 class="card-title">Элегантный часы</h4>
+            <div class="card-price">12 000 ₽</div>
+            <div class="card-counter">
+                <button class="counterDec">−</button>
+                <span id="cnt-1">1</span>
+                <button class="counterInc">+</button>
+            </div>
+            <div class="card-actions">
+                <button class="add-btn" data-id="1">Добавить в корзину</button>
+                <button class="del-btn" data-id="1" style="display:none;">✖</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://via.placeholder.com/300x160?text
